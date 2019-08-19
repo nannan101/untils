@@ -1,0 +1,16 @@
+{
+    "name": "qiaonan/utils",
+    "description": "使用工具",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+          "Src\\": "src/"
+        }
+    },
+    "require": {
+        "firebase/php-jwt": "^5.0",
+		"topthink/think-image": "^1.0",
+		"php-curl-class/php-curl-class": "^8.6",
+		"nette/utils": "2.5.*"
+    }
+}
