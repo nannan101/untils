@@ -5,7 +5,7 @@ include 'vendor/autoload.php';
 use Src\Token;
 use Src\IdCreate;
 use Src\Poster;
-use Src\MhtFileMaker;
+use Src\Execel;
 
 class Run {
    
@@ -41,29 +41,6 @@ class Run {
         return IdCreate::createOnlyId();
     }
     
-    /**
-     * html转word
-     * @throws Exception
-     */
-    public function html2word()
-    {
-        // 本地下载
-        MhtFileMaker::getInstance()
-            ->addFile('resource/worker/tpl.html')
-            ->eraseLink()
-            ->fetchImg('http://utils.test/')
-            ->makeFile('resource/worker/a.doc');
-
-        // 浏览器下载
-        MhtFileMaker::getInstance()
-            ->addFile('resource/worker/tpl.html')
-            ->fetchImg('http://utils.test/')
-            ->download();
-    }
-    
-    /**
-     * 生成海报
-     */
     public function poster()
     {
         $poster = new Poster();
@@ -95,19 +72,19 @@ class Run {
                        'conetent' => '介绍：地灵曲是一款非常火爆的盗墓类游戏，画面刺激，辣眼睛，二十四小时可在线solo，地灵曲根据小说，小说作者一笑九幽，默默多大的 大神制作，150人团队耗时三年打造，即将上映',
                     ],
                 ],
-                'is_table'=> 1, //是否需要表单
+                'is_table'=> 1,
                 'header'=>[
-                    'height'=> 40, //行高
-                    'font' => 12, //字体
-                    'fields' =>['参赛证号','姓 名','性 别','年 级','分数'] //字段名称
+                    'height'=> 40,
+                    'font' => 12,
+                    'fields' =>['参赛证号','姓 名','性 别','年 级']
                 ],
                 'body' => [
-                    'font' => 12, //字体大小
-                   'height'=> 40, //行高
-                   'data' => [ //数据
-                       ['xl100034','张三','女','二年级',80],  
-                       ['g1100034','张三','女','三年级',60],
-                    
+                    'font' => 12,
+                   'height'=> 40,
+                   'data' => [
+                       ['xl100034','张三','女','二年级'],
+                       ['g1100034','张三','女','三年级'],
+                       ['g1100034','王二麻子','女','三年级']
                    ] 
                 ]
                 
@@ -116,7 +93,18 @@ class Run {
         ];
         $poster->makeing($config);
     }
+    public function execel()
+    {
+        $head = ['编号','姓名','性别','年级'];
+        $body = [
+            ['order_on'=>'xl100034','name'=>'张三','sex'=>'女','greaner' => '二年级'],
+            ['order_on'=>'g1100034','name'=>'张三','sex'=>'女','greaner' => '三年级'],
+            ['order_on'=>'g1100034','name'=>'王二麻子','sex'=>'女','greaner' => '三年级'],
+        ];
+        Execel::export($head, $body, 2);
+        
+    }
 }
 
 $test = new Run();
-var_dump($test->poster());
+var_dump($test->execel());
