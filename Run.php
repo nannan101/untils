@@ -8,6 +8,7 @@ use Src\Poster;
 use Src\Execel;
 use Src\MhtFileMaker;
 use Src\Cutpage;
+use Src\HashidsHash;
 
 class Run {
    
@@ -144,7 +145,30 @@ class Run {
         ];
         return $result;
     }
+    public function encode()
+    {
+        $data = [
+            ['id' => 11,'age'=> 35, 'sex' => '女','rose'],
+            ['id' => 12,'age'=> 37, 'sex' => '女','miss'],
+            ['id' => 13,'age'=> 38, 'sex' => '男','zhangsan'],
+            ['id' => 14,'age'=> 39, 'sex' => '男','lisi'],
+            ['id' => 15,'age'=> 40, 'sex' => '女','jacky'],
+            ['id' => 16,'age'=> 41, 'sex' => '女','lacky'],
+            ['id' => "zxc",'age'=> 42, 'sex' => '女','sun'],
+        ];
+//        $data = ['id' => 11,'age'=> 35, 'sex' => '女','rose'];
+//        $data = HashidsHash::hashids_encode($data,"id");
+        $data = 111111111111;
+        
+        $data = HashidsHash::hashids_encode($data);
+       
+       return $data;
+    }
+    public function decode()
+    {
+        return  HashidsHash::hashids_decode("dQ74Go4NLp");
+    }
 }
 
 $test = new Run();
-var_dump($test->cutpage());
+var_dump($test->encode());

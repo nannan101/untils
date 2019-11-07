@@ -12,6 +12,7 @@
         "topthink/think-image": "^1.0",
         "php-curl-class/php-curl-class": "^8.6",
         "nette/utils": "2.5.*",
-        "phpoffice/phpexcel": "^1.8"
+        "phpoffice/phpexcel": "^1.8",
+        "hashids/hashids": "^2.0"
     }
 }
