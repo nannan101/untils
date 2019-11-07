@@ -6,6 +6,8 @@ use Src\Token;
 use Src\IdCreate;
 use Src\Poster;
 use Src\Execel;
+use Src\MhtFileMaker;
+use Src\Cutpage;
 
 class Run {
    
@@ -104,7 +106,45 @@ class Run {
         Execel::export($head, $body, 2);
         
     }
+    /**
+     * html转word
+     * @throws Exception
+     */
+    public function html2word()
+    {
+        // 本地下载
+        MhtFileMaker::getInstance()
+            ->addFile('resource/worker/tpl.html')
+            ->eraseLink()
+            ->fetchImg('http://utils.test')
+            ->makeFile('resource/a.doc');
+
+        // 浏览器下载
+        MhtFileMaker::getInstance()
+            ->addFile('resource/worker/tpl.html')
+            ->fetchImg('http://utils.test')
+            ->download();
+    }
+    /**
+     * 长文章分页
+     */
+    public function cutpage()
+    {
+        $pagestr = file_get_contents("resource/text.txt");
+        
+        $cp = new Cutpage($pagestr,100);
+        
+        $ipage = isset($_GET["ipage"])? intval($_GET["ipage"]):1;  
+        $cut_str = $cp->cut_str();
+       
+        $result = [
+            'total' => $cp->get_sum_page(),
+            'content' => $cut_str[$ipage -1], 
+            'pages' => $cp->pagenav(),
+        ];
+        return $result;
+    }
 }
 
 $test = new Run();
-var_dump($test->execel());
+var_dump($test->cutpage());
